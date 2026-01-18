@@ -65,6 +65,9 @@ module.exports = {
     new webpack.ProvidePlugin({
       process: "process/browser",
     }),
+    new webpack.NormalModuleReplacementPlugin(/^node:url$/, (resource) => {
+      resource.request = path.resolve(__dirname, "src/shims/node-url.js");
+    }),
   ],
   module: {
     rules: [
@@ -95,6 +98,9 @@ module.exports = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     mainFields: ["browser", "module", "main"],
+    alias: {
+      "node:url": path.resolve(__dirname, "src/shims/node-url.js"),
+    },
     fallback: {
       // assert: require.resolve("assert"),
       // buffer: require.resolve("buffer/"),
