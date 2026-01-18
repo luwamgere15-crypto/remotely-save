@@ -118,6 +118,14 @@ class ObsHttpHandler extends FetchHttpHandler {
 
     const raceOfPromises = [
       requestUrl(param).then((rsp) => {
+        // Debugging 403 errors from requestUrl
+        if (rsp.status === 403) {
+          console.error(
+            "S3 requestUrl 403 Forbidden. Body:",
+            rsp.text
+          );
+        }
+
         const headers = rsp.headers;
         const headersLower: Record<string, string> = {};
         for (const key of Object.keys(headers)) {
