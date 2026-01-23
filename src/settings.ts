@@ -986,7 +986,7 @@ export class RemotelySaveSettingTab extends PluginSettingTab {
           });
       });
 
-    if (VALID_REQURL && !requireApiVersion(API_VER_ENSURE_REQURL_OK)) {
+    if (VALID_REQURL) {
       new Setting(s3Div)
         .setName(t("settings_s3_bypasscorslocally"))
         .setDesc(t("settings_s3_bypasscorslocally_desc"))

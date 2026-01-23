@@ -1426,10 +1426,6 @@ export default class RemotelySavePlugin extends Plugin {
     }
     this.settings.logToDB = false; // deprecated as of 20240113
 
-    if (requireApiVersion(API_VER_ENSURE_REQURL_OK)) {
-      this.settings.s3.bypassCorsLocally = true; // deprecated as of 20240113
-    }
-
     if (this.settings.agreeToUseSyncV3 === undefined) {
       this.settings.agreeToUseSyncV3 = false;
     }

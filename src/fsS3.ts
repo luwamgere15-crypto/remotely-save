@@ -118,6 +118,14 @@ class ObsHttpHandler extends FetchHttpHandler {
 
     const raceOfPromises = [
       requestUrl(param).then((rsp) => {
+        // Debugging 403 errors from requestUrl
+        if (rsp.status === 403) {
+          console.error(
+            "S3 requestUrl 403 Forbidden. Body:",
+            rsp.text
+          );
+        }
+
         const headers = rsp.headers;
         const headersLower: Record<string, string> = {};
         for (const key of Object.keys(headers)) {
@@ -838,6 +846,11 @@ export class FakeFsS3 extends FakeFs {
       }
     } catch (err: any) {
       console.debug(err);
+      // Try to expose more details for 403 errors (and others)
+      if (err?.$metadata?.httpStatusCode === 403) {
+        console.error("403 Forbidden Error Details:", err);
+      }
+
       if (callbackFunc !== undefined) {
         if (this.s3Config.s3Endpoint.contains(this.s3Config.s3BucketName)) {
           const err2 = new AggregateError([
